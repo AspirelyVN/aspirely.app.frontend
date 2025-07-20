@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "Login",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "show": "Show",
+    "hide": "Hide",
+    "submit": "Login",
+    "or": "Or",
+    "errorEmailPasswordRequired": "Please enter email and password.",
+    "errorInvalidEmail": "Invalid email.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "register": {
+    "title": "Sign Up",
+    "namePlaceholder": "Full name",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "show": "Show",
+    "hide": "Hide",
+    "submit": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "errorIncomplete": "Please complete all fields.",
+    "errorInvalidEmail": "Invalid email.",
+    "errorPasswordLength": "Password must be at least 8 characters.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "profile": {
+    "loading": "Loading...",
+    "title": "Profile",
+    "email": "Email",
+    "name": "Name"
+  }
+}
