@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspirely-app-frontend
+  labels:
+    app: aspirely-app-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspirely-app-frontend
+  template:
+    metadata:
+      labels:
+        app: aspirely-app-frontend
+    spec:
+      containers:
+        - name: aspirely-app-frontend
+          image: nghgkim/aspirely-app-frontend:latest
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: dockerhub-secret
