@@ -1,0 +1,25 @@
+name: Build & Push Docker Image to GHCR
+
+on: [push, pull_request]
+
+jobs:
+  build-push-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/aspirelyvn/aspirely.app.frontend:${{ github.sha }} .
+          docker tag ghcr.io/aspirelyvn/aspirely.app.frontend:${{ github.sha }} ghcr.io/aspirelyvn/aspirely.app.frontend:latest
+
+
+      - name: Push Docker image (sha)
+        run: docker push ghcr.io/aspirelyvn/aspirely.app.frontend:${{ github.sha }}
+
+      - name: Push Docker image (latest)
+        run: docker push ghcr.io/aspirelyvn/aspirely.app.frontend:latest
