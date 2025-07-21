@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: aspirely-app-frontend
-          image: nghgkim/aspirely-app-frontend:latest
+          image: ghcr.io/aspirelyvn/aspirely.app.frontend:latest
           ports:
             - containerPort: 3000
       imagePullSecrets:
