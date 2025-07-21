@@ -4,27 +4,24 @@ import Link from "next/link"
 import { FaGoogle, FaApple, FaFacebookF } from "react-icons/fa"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
-import { useTranslation } from "@/i18n"
-import LanguageSwitcher from "@/components/LanguageSwitcher"
 
 export default function RegisterPage() {
   const router = useRouter()
-  const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ name: "", email: "", password: "" })
   const [error, setError] = useState("")
 
   const handleRegister = async () => {
     if (!form.name || !form.email || !form.password) {
-      setError(t("register.errorIncomplete"))
+      setError("Vui lòng điền đầy đủ thông tin")
       return
     }
     if (!/\S+@\S+\.\S+/.test(form.email)) {
-      setError(t("register.errorInvalidEmail"))
+      setError("Email không hợp lệ")
       return
     }
     if (form.password.length < 8) {
-      setError(t("register.errorPasswordLength"))
+      setError("Mật khẩu phải có ít nhất 8 ký tự")
       return
     }
 
@@ -40,27 +37,26 @@ export default function RegisterPage() {
       Cookies.set("token", data.token, { expires: 7 })
       Cookies.set("email", data.email || form.email, { expires: 7 })
       router.push("/profile")
-    } catch (e) {
-      setError(t("register.errorGeneric"))
+    } catch {
+      setError("Đã có lỗi xảy ra")
     }
   }
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-6">
-        <LanguageSwitcher />
-        <h2 className="text-3xl font-bold text-center text-[#9F0A0B]">{t("register.title")}</h2>
+        <h2 className="text-3xl font-bold text-center text-[#9F0A0B]">Đăng ký</h2>
 
         <input
           type="text"
-          placeholder={t("register.namePlaceholder")}
+          placeholder="Họ tên"
           className="w-full p-3 border rounded"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
         <input
           type="email"
-          placeholder={t("register.emailPlaceholder")}
+          placeholder="Email"
           className="w-full p-3 border rounded"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -68,7 +64,7 @@ export default function RegisterPage() {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder={t("register.passwordPlaceholder")}
+            placeholder="Mật khẩu"
             className="w-full p-3 border rounded pr-10"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -78,7 +74,7 @@ export default function RegisterPage() {
             className="absolute top-1/2 right-3 transform -translate-y-1/2 text-sm text-gray-500"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? t("register.hide") : t("register.show")}
+            {showPassword ? "Ẩn" : "Hiện"}
           </button>
         </div>
 
@@ -88,12 +84,12 @@ export default function RegisterPage() {
           onClick={handleRegister}
           className="w-full bg-[#9F0A0B] text-white font-semibold py-3 rounded hover:opacity-90"
         >
-          {t("register.submit")}
+          {"Đăng ký"}
         </button>
 
         <div className="flex items-center justify-center gap-4 text-gray-500 text-sm">
           <span className="h-px w-full bg-gray-300" />
-          {t("login.or")}
+          {"Hoặc"}
           <span className="h-px w-full bg-gray-300" />
         </div>
 
@@ -110,9 +106,9 @@ export default function RegisterPage() {
         </div>
 
         <p className="text-sm text-center text-gray-600">
-          {t("register.alreadyHaveAccount")}{" "}
+          {"Bạn đã có tài khoản? "}{" "}
           <Link href="/login" className="text-[#9F0A0B] font-medium hover:underline">
-            {t("register.login")}
+            {"Đăng nhập"}
           </Link>
         </p>
       </div>

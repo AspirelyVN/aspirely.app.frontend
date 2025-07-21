@@ -4,13 +4,10 @@ import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { FaGoogle, FaApple, FaFacebookF } from "react-icons/fa"
 import Cookies from "js-cookie"
-import { useTranslation } from "@/i18n"
-import LanguageSwitcher from "@/components/LanguageSwitcher"
 
 function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { t } = useTranslation()
 
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: "", password: "" })
@@ -18,11 +15,11 @@ function LoginContent() {
 
   const handleLogin = async () => {
     if (!form.email || !form.password) {
-      setError(t("login.errorEmailPasswordRequired"))
+      setError("Email và mật khẩu là bắt buộc")
       return
     }
     if (!/\S+@\S+\.\S+/.test(form.email)) {
-      setError(t("login.errorInvalidEmail"))
+      setError("Email không hợp lệ")
       return
     }
     setError("")
@@ -37,8 +34,8 @@ function LoginContent() {
       Cookies.set("token", data.token, { expires: 7 })
       Cookies.set("email", data.email || form.email, { expires: 7 })
       router.push("/profile")
-    } catch (e) {
-      setError(t("login.errorGeneric"))
+    } catch {
+      setError("Đã có lỗi xảy ra")
     }
   }
 
@@ -57,12 +54,11 @@ function LoginContent() {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-6">
-        <LanguageSwitcher />
-        <h2 className="text-3xl font-bold text-center text-[#9F0A0B]">{t("login.title")}</h2>
+        <h2 className="text-3xl font-bold text-center text-[#9F0A0B]">Đăng nhập</h2>
 
         <input
           type="email"
-          placeholder={t("login.emailPlaceholder")}
+          placeholder="Email"
           className="w-full p-3 border rounded"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -70,7 +66,7 @@ function LoginContent() {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder={t("login.passwordPlaceholder")}
+            placeholder="Mật khẩu"
             className="w-full p-3 border rounded pr-10"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -80,7 +76,7 @@ function LoginContent() {
             className="absolute top-1/2 right-3 transform -translate-y-1/2 text-sm text-gray-500"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? t("login.hide") : t("login.show")}
+            {showPassword ? "Ẩn" : "Hiện"}
           </button>
         </div>
 
@@ -90,12 +86,12 @@ function LoginContent() {
           onClick={handleLogin}
           className="w-full bg-[#9F0A0B] text-white font-semibold py-3 rounded hover:opacity-90"
         >
-          {t("login.submit")}
+          {"Đăng nhập"}
         </button>
 
         <div className="flex items-center justify-center gap-4 text-gray-500 text-sm">
           <span className="h-px w-full bg-gray-300" />
-          {t("login.or")}
+          Hoặc
           <span className="h-px w-full bg-gray-300" />
         </div>
 

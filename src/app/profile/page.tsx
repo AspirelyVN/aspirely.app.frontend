@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useTranslation } from "@/i18n"
 
 function getCookie(name: string): string | null {
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"))
@@ -17,7 +16,6 @@ interface User {
 
 export default function ProfilePage() {
   const router = useRouter()
-  const { t } = useTranslation()
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
@@ -40,17 +38,17 @@ export default function ProfilePage() {
       .catch(() => router.push("/login"))
   }, [router])
 
-  if (!user) return <p className="text-center p-10">{t("profile.loading")}</p>
+  if (!user) return <p className="text-center p-10">Loading...</p>
 
   return (
     <div className="p-6 max-w-md mx-auto bg-white shadow rounded-xl mt-10 space-y-4">
-      <h1 className="text-2xl font-bold">{t("profile.title")}</h1>
+      <h1 className="text-2xl font-bold">Thông tin cá nhân</h1>
       <p>
-        <strong>{t("profile.email")}: </strong>
+        <strong>Email: </strong>
         {user.email}
       </p>
       <p>
-        <strong>{t("profile.name")}: </strong>
+        <strong>Họ tên: </strong>
         {user.name}
       </p>
       {user.avatar && <img src={user.avatar} alt="Avatar" className="w-20 h-20 rounded-full" />}
