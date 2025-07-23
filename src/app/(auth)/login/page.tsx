@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, Suspense } from "react"
+import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { FaGoogle, FaApple, FaFacebookF } from "react-icons/fa"
 import Cookies from "js-cookie"
@@ -109,6 +110,13 @@ function LoginContent() {
             <FaFacebookF className="text-blue-600" />
           </button>
         </div>
+
+        <p className="text-sm text-center text-gray-600">
+          {"Bạn chưa có tài khoản? "}{" "}
+          <Link href="/register" className="text-[#9F0A0B] font-medium hover:underline">
+            {"Đăng ký"}
+          </Link>
+        </p>
       </div>
     </div>
   )

@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation"
 export default function RegisterPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
-  const [form, setForm] = useState({ name: "", email: "", password: "" })
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" })
   const [error, setError] = useState("")
 
   const handleRegister = async () => {
-    if (!form.name || !form.email || !form.password) {
+    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       setError("Vui lòng điền đầy đủ thông tin")
       return
     }
@@ -24,13 +25,17 @@ export default function RegisterPage() {
       setError("Mật khẩu phải có ít nhất 8 ký tự")
       return
     }
+    if (form.password !== form.confirmPassword) {
+      setError("Mật khẩu và xác nhận mật khẩu không khớp")
+      return
+    }
 
     setError("")
     try {
       const res = await fetch("https://api.aspirely.edu.vn/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ name: form.name, email: form.email, password: form.password }),
       })
       if (!res.ok) throw new Error("Failed")
       const data = await res.json()
@@ -64,7 +69,7 @@ export default function RegisterPage() {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Mật khẩu"
+            placeholder="Mật khẩu (tối thiểu 8 ký tự)"
             className="w-full p-3 border rounded pr-10"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -77,6 +82,22 @@ export default function RegisterPage() {
             {showPassword ? "Ẩn" : "Hiện"}
           </button>
         </div>
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Xác nhận mật khẩu"
+            className="w-full p-3 border rounded pr-10"
+            value={form.confirmPassword}
+            onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+          />
+          <button
+            type="button"
+            className="absolute top-1/2 right-3 transform -translate-y-1/2 text-sm text-gray-500"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? "Ẩn" : "Hiện"}
+          </button>
+        </div>
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
 
@@ -84,12 +105,12 @@ export default function RegisterPage() {
           onClick={handleRegister}
           className="w-full bg-[#9F0A0B] text-white font-semibold py-3 rounded hover:opacity-90"
         >
-          {"Đăng ký"}
+          Đăng ký
         </button>
 
         <div className="flex items-center justify-center gap-4 text-gray-500 text-sm">
           <span className="h-px w-full bg-gray-300" />
-          {"Hoặc"}
+          Hoặc
           <span className="h-px w-full bg-gray-300" />
         </div>
 
@@ -106,9 +127,9 @@ export default function RegisterPage() {
         </div>
 
         <p className="text-sm text-center text-gray-600">
-          {"Bạn đã có tài khoản? "}{" "}
+          Bạn đã có tài khoản?{" "}
           <Link href="/login" className="text-[#9F0A0B] font-medium hover:underline">
-            {"Đăng nhập"}
+            Đăng nhập
           </Link>
         </p>
       </div>
