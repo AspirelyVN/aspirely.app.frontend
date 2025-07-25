@@ -12,6 +12,7 @@ interface User {
   email: string
   name: string
   avatar?: string
+  role?: string
 }
 
 export default function ProfilePage() {
@@ -34,7 +35,13 @@ export default function ProfilePage() {
         if (!res.ok) throw new Error("Unauthorized")
         return res.json()
       })
-      .then((data: User) => setUser(data))
+      .then((data: User) => {
+        if (!data.role) {
+          router.push("/select-role")
+          return
+        }
+        setUser(data)
+      })
       .catch(() => router.push("/login"))
   }, [router])
 
