@@ -25,11 +25,14 @@ function LoginContent() {
     }
     setError("")
     try {
-      const res = await fetch("https://api.aspirely.edu.vn/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      )
       if (!res.ok) throw new Error("Failed")
       const data = await res.json()
       Cookies.set("token", data.token, { expires: 7 })
@@ -98,7 +101,9 @@ function LoginContent() {
 
         <div className="grid grid-cols-3 gap-3">
           <button
-            onClick={() => (window.location.href = "https://api.aspirely.edu.vn/auth/google/login")}
+            onClick={() =>
+              (window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`)
+            }
             className="flex items-center justify-center p-3 border rounded hover:bg-gray-50"
           >
             <FaGoogle className="text-red-500" />
