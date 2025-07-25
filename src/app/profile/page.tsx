@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 function getCookie(name: string): string | null {
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"))
@@ -58,7 +59,12 @@ export default function ProfilePage() {
         <strong>Họ tên: </strong>
         {user.name}
       </p>
-      {user.avatar && <img src={user.avatar} alt="Avatar" className="w-20 h-20 rounded-full" />}
+      {user.avatar && (
+        <img src={user.avatar} alt="Avatar" className="w-20 h-20 rounded-full" />
+      )}
+      <Link href="/profile/edit" className="text-blue-600 hover:underline">
+        Chỉnh sửa thông tin
+      </Link>
     </div>
   )
 }
