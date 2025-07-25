@@ -17,6 +17,9 @@ spec:
       containers:
         - name: aspirely-app-frontend
           image: ghcr.io/aspirelyvn/aspirely.app.frontend:latest
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              value: "https://api.aspirely.edu.vn"
           ports:
             - containerPort: 3000
       imagePullSecrets:

@@ -14,6 +14,12 @@ pnpm dev
 bun dev
 ```
 
+Create a `.env.local` file in the project root and define the API base URL:
+
+```bash
+NEXT_PUBLIC_API_URL=https://api.aspirely.edu.vn
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

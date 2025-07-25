@@ -27,7 +27,7 @@ export default function ProfilePage() {
       return
     }
 
-    fetch("https://api.aspirely.edu.vn/profile", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -20,7 +20,7 @@ export default function SelectRolePage() {
     }
     setLoading(true)
     try {
-      const res = await fetch("https://api.aspirely.edu.vn/profile", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

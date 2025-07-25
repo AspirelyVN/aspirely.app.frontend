@@ -32,11 +32,18 @@ export default function RegisterPage() {
 
     setError("")
     try {
-      const res = await fetch("https://api.aspirely.edu.vn/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, password: form.password }),
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            password: form.password,
+          }),
+        }
+      )
       if (!res.ok) throw new Error("Failed")
       const data = await res.json()
       Cookies.set("token", data.token, { expires: 7 })
